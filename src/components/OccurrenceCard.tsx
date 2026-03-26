@@ -32,7 +32,7 @@ export default function OccurrenceCard({
 
 const styles = StyleSheet.create({
     card: {
-        backgroundColor: colors.sufarce,
+        backgroundColor: colors.surface,
         borderRadius: radius.lg,
         padding: spacing.md,
         marginBottom: spacing.md,
