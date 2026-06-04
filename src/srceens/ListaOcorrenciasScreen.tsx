@@ -6,9 +6,10 @@ import { Ocorrencia } from '../../App';
 
 type Props = {
   ocorrencias: Ocorrencia[];
+  carregando: boolean;
 };
 
-export default function ListaOcorrenciasScreen({ ocorrencias }: Props) {
+export default function ListaOcorrenciasScreen({ carregando, ocorrencias }: Props) {
 
   return (
     <View style={styles.container}>
@@ -16,31 +17,37 @@ export default function ListaOcorrenciasScreen({ ocorrencias }: Props) {
         titulo="Lista de Ocorrências"
         subtitulo="As ocorrências cadastradas aparecerão abaixo."
       />
-
-      {ocorrencias.length === 0 ? (
-
+      {carregando ? (
         <View style={styles.vazioBox}>
           <Text style={styles.vazioTexto}>
-            Nenhuma ocorrência cadastrada até o momento.
+            Carregando ocorrências...
           </Text>
         </View>
+      )
+        : ocorrencias.length === 0 ? (
 
-      ) : (
+          <View style={styles.vazioBox}>
+            <Text style={styles.vazioTexto}>
+              Nenhuma ocorrência cadastrada até o momento.
+            </Text>
+          </View>
 
-        <FlatList
-          data={ocorrencias}
-          keyExtractor={(item) => item.id}
-          renderItem={({ item }) => (
+        ) : (
 
-            <OccurrenceCard
-              titulo={item.titulo}
-              descricao={item.descricao}
-              local={item.local}
-            />
-          )}
-          showsVerticalScrollIndicator={false}
-        />
-      )}
+          <FlatList
+            data={ocorrencias}
+            keyExtractor={(item) => item.id}
+            renderItem={({ item }) => (
+
+              <OccurrenceCard
+                titulo={item.titulo}
+                descricao={item.descricao}
+                local={item.local}
+              />
+            )}
+            showsVerticalScrollIndicator={false}
+          />
+        )}
     </View>
   );
 }
