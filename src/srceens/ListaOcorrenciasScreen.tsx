@@ -7,9 +7,17 @@ import { Ocorrencia } from '../../App';
 type Props = {
   ocorrencias: Ocorrencia[];
   carregando: boolean;
+  removerOcorrencia: (id: string) => Promise<void>;
+  editarOcorrencia: (
+    id: string,
+    dadosAtualizados: Omit<
+      Ocorrencia,
+      'id' | 'slug' | 'createdAt' | 'updatedAt' | 'deletedAt'
+    >
+  ) => Promise<void>;
 };
 
-export default function ListaOcorrenciasScreen({ carregando, ocorrencias }: Props) {
+export default function ListaOcorrenciasScreen({ carregando, ocorrencias, removerOcorrencia, editarOcorrencia, }: Props) {
 
   return (
     <View style={styles.container}>
@@ -40,9 +48,12 @@ export default function ListaOcorrenciasScreen({ carregando, ocorrencias }: Prop
             renderItem={({ item }) => (
 
               <OccurrenceCard
+                id={item.id}
                 titulo={item.titulo}
                 descricao={item.descricao}
                 local={item.local}
+                onRemover={removerOcorrencia}
+                onEditar={editarOcorrencia}
               />
             )}
             showsVerticalScrollIndicator={false}
