@@ -92,7 +92,7 @@ const styles = StyleSheet.create({
         fontSize: fontSize.md,
         fontWeight: '600',
         color: colors.text,
-        marginLeft: spacing.xs, // 👈 substitui o gap
+        marginLeft: spacing.xs,
         flex: 1,
     },
     descricao: {
