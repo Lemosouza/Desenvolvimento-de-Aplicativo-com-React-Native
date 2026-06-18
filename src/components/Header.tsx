@@ -10,6 +10,7 @@ export default function Header({ titulo, subtitulo }: HeaderProps) {
     return (
         <View style={styles.container}>
             <Text style={styles.titulo}>{titulo}</Text>
+            <View style={styles.divisor} />
             {subtitulo ? <Text style={styles.subtitulo}>{subtitulo}</Text> : null}
         </View>
     );
@@ -25,12 +26,20 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         color: colors.text,
         textAlign: 'center',
+        letterSpacing: 0.3,
+    },
+    divisor: {
+        width: 36,
+        height: 3,
+        backgroundColor: colors.primary,
+        borderRadius: 2,
+        marginTop: spacing.xs,
+        marginBottom: spacing.xs,
     },
     subtitulo: {
-        fontSize: fontSize.md,
+        fontSize: fontSize.sm,
         color: colors.textLight,
-        marginTop: spacing.xs,
         textAlign: 'center',
-        lineHeight: 22,
+        lineHeight: 20,
     },
 });

@@ -18,11 +18,11 @@ const styles = StyleSheet.create({
     botao: {
         backgroundColor: colors.primary,
         paddingVertical: spacing.sm + 2,
-        paddingHorizontal: spacing.md,
         borderRadius: radius.md,
         alignItems: 'center',
         marginTop: spacing.sm,
-        width: '100%',
+        alignSelf: 'center',
+        paddingHorizontal: spacing.xl,
     },
     texto: {
         color: colors.surface,

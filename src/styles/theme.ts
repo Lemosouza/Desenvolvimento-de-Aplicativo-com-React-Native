@@ -1,13 +1,16 @@
 export const colors = {
     primary: '#2563eb',
     primaryDark: '#1d4ed8',
-    background: '#f5f7fb',
+    primaryLight: '#eff6ff',   
+    background: '#f0f2f8',    
     surface: '#ffffff',
     text: '#111827',
     textLight: '#6b7280',
-    border: '#d1d5db',
+    border: '#e2e8f0',        
     success: '#16a34a',
+    successLight: '#f0fdf4',  
     danger: '#dc2626',
+    dangerLight: '#fef2f2',   
 };
 
 export const spacing = {
@@ -31,9 +34,20 @@ export const fontSize = {
     xl: 28,
 };
 
+export const shadow = {
+    card: {
+        shadowColor: '#1e3a5f',
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.07,
+        shadowRadius: 6,
+        elevation: 2,
+    },
+};
+
 export const theme = {
     colors,
     spacing,
     radius,
     fontSize,
+    shadow,
 };

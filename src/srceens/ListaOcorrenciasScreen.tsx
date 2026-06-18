@@ -1,86 +1,87 @@
 import { View, Text, FlatList, StyleSheet } from 'react-native';
+import { Ionicons } from '@expo/vector-icons';
 import Header from '../components/Header';
 import OccurrenceCard from '../components/OccurrenceCard';
-import { colors, fontSize, spacing } from '../styles/theme';
+import { colors, fontSize, radius, spacing, shadow } from '../styles/theme';
 import { Ocorrencia } from '../../App';
 
 type Props = {
-  ocorrencias: Ocorrencia[];
-  carregando: boolean;
-  removerOcorrencia: (id: string) => Promise<void>;
-  editarOcorrencia: (
-    id: string,
-    dadosAtualizados: Omit<
-      Ocorrencia,
-      'id' | 'slug' | 'createdAt' | 'updatedAt' | 'deletedAt'
-    >
-  ) => Promise<void>;
+    ocorrencias: Ocorrencia[];
+    carregando: boolean;
+    removerOcorrencia: (id: string) => Promise<void>;
+    editarOcorrencia: (
+        id: string,
+        dadosAtualizados: Omit<Ocorrencia, 'id' | 'slug' | 'createdAt' | 'updatedAt' | 'deletedAt'>
+    ) => Promise<void>;
 };
 
-export default function ListaOcorrenciasScreen({ carregando, ocorrencias, removerOcorrencia, editarOcorrencia, }: Props) {
+export default function ListaOcorrenciasScreen({ carregando, ocorrencias, removerOcorrencia, editarOcorrencia }: Props) {
+    return (
+        <View style={styles.container}>
+            <Header
+                titulo="Lista de Ocorrências"
+                subtitulo="As ocorrências cadastradas aparecerão abaixo."
+            />
 
-  return (
-    <View style={styles.container}>
-      <Header
-        titulo="Lista de Ocorrências"
-        subtitulo="As ocorrências cadastradas aparecerão abaixo."
-      />
-      {carregando ? (
-        <View style={styles.vazioBox}>
-          <Text style={styles.vazioTexto}>
-            Carregando ocorrências...
-          </Text>
-        </View>
-      )
-        : ocorrencias.length === 0 ? (
-
-          <View style={styles.vazioBox}>
-            <Text style={styles.vazioTexto}>
-              Nenhuma ocorrência cadastrada até o momento.
-            </Text>
-          </View>
-
-        ) : (
-
-          <FlatList
-            data={ocorrencias}
-            keyExtractor={(item) => item.id}
-            renderItem={({ item }) => (
-
-              <OccurrenceCard
-                id={item.id}
-                titulo={item.titulo}
-                descricao={item.descricao}
-                local={item.local}
-                onRemover={removerOcorrencia}
-                onEditar={editarOcorrencia}
-              />
+            {carregando ? (
+                <View style={styles.estadoBox}>
+                    <Ionicons name="reload-outline" size={32} color={colors.textLight} />
+                    <Text style={styles.estadoTexto}>Carregando ocorrências...</Text>
+                </View>
+            ) : ocorrencias.length === 0 ? (
+                <View style={styles.estadoBox}>
+                    <Ionicons name="document-outline" size={32} color={colors.textLight} />
+                    <Text style={styles.estadoTexto}>Nenhuma ocorrência cadastrada.</Text>
+                    <Text style={styles.estadoDica}>Use a aba Nova Ocorrência para começar.</Text>
+                </View>
+            ) : (
+                <FlatList
+                    data={ocorrencias}
+                    keyExtractor={(item) => item.id}
+                    renderItem={({ item }) => (
+                        <OccurrenceCard
+                            id={item.id}
+                            titulo={item.titulo}
+                            descricao={item.descricao}
+                            local={item.local}
+                            onRemover={removerOcorrencia}
+                            onEditar={editarOcorrencia}
+                        />
+                    )}
+                    showsVerticalScrollIndicator={false}
+                />
             )}
-            showsVerticalScrollIndicator={false}
-          />
-        )}
-    </View>
-  );
+        </View>
+    );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: colors.background,
-    padding: spacing.lg,
-  },
-
-  vazioBox: {
-    backgroundColor: colors.surface,
-    borderWidth: 1,
-    borderColor: colors.border,
-    borderRadius: 12,
-    padding: spacing.lg,
-  },
-
-  vazioTexto: {
-    fontSize: fontSize.md,
-    color: colors.textLight,
-    textAlign: 'center',
-  },
+    container: {
+        flex: 1,
+        backgroundColor: colors.background,
+        padding: spacing.lg,
+        paddingTop: spacing.xl,
+    },
+    estadoBox: {
+        backgroundColor: colors.surface,
+        borderWidth: 1,
+        borderColor: colors.border,
+        borderRadius: radius.lg,
+        padding: spacing.xl,
+        alignItems: 'center',
+        gap: spacing.xs,
+        ...shadow.card,
+    },
+    estadoTexto: {
+        fontSize: fontSize.md,
+        color: colors.textLight,
+        textAlign: 'center',
+        marginTop: spacing.xs,
+    },
+    estadoDica: {
+        fontSize: fontSize.sm,
+        color: colors.textLight,
+        textAlign: 'center',
+        opacity: 0.7,
+    },
 });

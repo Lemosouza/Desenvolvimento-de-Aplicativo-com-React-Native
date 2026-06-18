@@ -1,6 +1,6 @@
 import { View, Text, StyleSheet } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
-import { colors, fontSize, spacing, radius } from "../styles/theme";
+import { colors, fontSize, spacing, radius, shadow } from "../styles/theme";
 import Header from "../components/Header";
 import { Ocorrencia } from "../../App";
 
@@ -14,41 +14,53 @@ export default function HomeScreen({ ocorrencias }: Props) {
 
     return (
         <View style={styles.container}>
-            <Header titulo="App de Ocorrências"
+            <Ionicons name="shield-checkmark-outline" size={40} color={colors.primary} style={styles.iconeHeader} />
+            <Header
+                titulo="App de Ocorrências"
                 subtitulo="Acompanhe os registros cadastrados pela API."
             />
+
             <View style={styles.resumoBox}>
-                <Text style={styles.resumoTitulo}>Total de Ocorrências</Text>
-                <Text style={styles.numero}>
-                    {totalOcorrencias}
-                </Text>
+                <View style={styles.cardTopoAzul} />
+                <View style={styles.cardCorpo}>
+                    <Text style={styles.resumoTitulo}>Total de Ocorrências</Text>
+                    <Text style={styles.numero}>{totalOcorrencias}</Text>
+                </View>
             </View>
 
             <View style={styles.resumoBox}>
-                <Text style={styles.resumoTitulo}>Última Ocorrência</Text>
+                <View style={styles.cardTopo}>
+                    <Ionicons name="time-outline" size={18} color={colors.primary} />
+                    <Text style={styles.resumoTitulo}>Última Ocorrência</Text>
+                </View>
                 {ultimaOcorrencia ? (
                     <>
                         <Text style={styles.item}>
-                            Título: {ultimaOcorrencia.titulo}
+                            <Text style={styles.itemLabel}>Título  </Text>
+                            {ultimaOcorrencia.titulo}
                         </Text>
                         <Text style={styles.item}>
-                            Local: {ultimaOcorrencia.local}
+                            <Text style={styles.itemLabel}>Local  </Text>
+                            {ultimaOcorrencia.local}
                         </Text>
                     </>
                 ) : (
-                    <Text style={styles.item}>
-                        Nenhuma ocorrência cadastrada.
-                    </Text>
+                    <Text style={styles.item}>Nenhuma ocorrência cadastrada.</Text>
                 )}
             </View>
 
             <View style={styles.resumoBox}>
-                <Text style={styles.resumoTitulo}>Resumo</Text>
+                <View style={styles.cardTopo}>
+                    <Ionicons name="person-outline" size={18} color={colors.primary} />
+                    <Text style={styles.resumoTitulo}>Resumo</Text>
+                </View>
                 <Text style={styles.item}>
-                    Usuário: alisson_nascimento
+                    <Text style={styles.itemLabel}>Usuário  </Text>
+                    alisson_nascimento
                 </Text>
                 <Text style={styles.item}>
-                    Ocorrências: {totalOcorrencias}
+                    <Text style={styles.itemLabel}>Ocorrências  </Text>
+                    {totalOcorrencias}
                 </Text>
             </View>
         </View>
@@ -60,31 +72,60 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: colors.background,
         padding: spacing.lg,
-        justifyContent: 'center',
+        paddingTop: spacing.xl,
+        
     },
     resumoBox: {
         backgroundColor: colors.surface,
         borderRadius: radius.lg,
-        padding: spacing.md,
+        marginBottom: spacing.md,
         borderWidth: 1,
         borderColor: colors.border,
+        overflow: 'hidden',
+        ...shadow.card,
+    },
+
+    cardTopoAzul: {
+        height: 4,
+        backgroundColor: colors.primary,
+        borderTopLeftRadius: radius.lg,
+        borderTopRightRadius: radius.lg,
+    },
+    cardCorpo: {
+        padding: spacing.md,
+    },
+    cardTopo: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        gap: spacing.xs,
+        padding: spacing.md,
+        paddingBottom: spacing.xs,
     },
     resumoTitulo: {
-        fontSize: fontSize.lg,
-        fontWeight: 'bold',
+        fontSize: fontSize.md,
+        fontWeight: '600',
         color: colors.text,
-        marginBottom: spacing.sm,
     },
     item: {
         fontSize: fontSize.md,
         color: colors.textLight,
-        marginBottom: spacing.xs,
+        paddingHorizontal: spacing.md,
+        paddingBottom: spacing.xs,
+        lineHeight: 22,
+    },
+    itemLabel: {
+        fontWeight: '600',
+        color: colors.text,
     },
     numero: {
-        fontSize: 36,
+        fontSize: 40,
         fontWeight: 'bold',
         color: colors.primary,
         textAlign: 'center',
+        paddingVertical: spacing.sm,
     },
-
+    iconeHeader: {
+    alignSelf: 'center',
+    marginBottom: spacing.xs,
+},
 });
